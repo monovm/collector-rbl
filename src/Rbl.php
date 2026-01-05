@@ -145,25 +145,25 @@ class Rbl extends Collector
                 }
 
             } else {
-                continue;
+                $config = null;
+            }
+
+            // Execute the scan for this mode
+            switch($mode) {
+                case "asns":
+                    $this->scanAsn($config);
+                    break;
+                case "netblocks":
+                    $this->scanNetblock($config);
+                    break;
+                case "ipaddresses":
+                    $this->scanAddresses($config);
+                    break;
+                case "tickets":
+                    $this->scanTickets();
+                    break;
             }
         }
-
-        switch($mode) {
-            case "asns":
-                $this->scanAsn($config);
-                break;
-            case "netblocks":
-                $this->scanNetblock($config);
-                break;
-            case "ipaddresses":
-                $this->scanAddresses($config);
-                break;
-            case "tickets":
-                $this->scanTickets();
-                break;
-        }
-
 
         return $this->success();
     }
