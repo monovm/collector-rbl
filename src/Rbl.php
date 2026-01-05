@@ -298,6 +298,19 @@ class Rbl extends Collector
 
                     if ($result = gethostbyname($lookup)) {
                         if ($result != $lookup) {
+                            // Skip error/invalid responses from RBLs
+                            // 127.255.255.254 = Spamhaus rate limit exceeded / query refused
+                            // 127.255.255.255 = General error / not authorized
+                            // Any 127.255.255.x response indicates an error, not a listing
+                            if (strpos($result, '127.255.255.') === 0) {
+                                continue; // Skip this result - it's an error response
+                            }
+
+                            // Only process valid listing responses (typically 127.0.0.x)
+                            if (strpos($result, '127.') !== 0) {
+                                continue; // Skip non-127.x.x.x responses
+                            }
+
                             // If config is empty, we fall back to this
                             $reason = 'SPAM Sending host';
 
