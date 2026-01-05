@@ -1,7 +1,6 @@
 {
     "name": "monovm/collector-rbl",
     "description": "Collector addon for handling notifications from RBL lists",
-    "version": "5.0.0",
     "keywords": ["laravel", "abuseio", "parser", "rbl"],
     "homepage": "http://abuse.io",
     "type": "library",
